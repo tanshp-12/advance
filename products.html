@@ -176,17 +176,6 @@
   <script src="script.js"></script>
   <script src="cart.js"></script>
   <script>
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const id = this.getAttribute('data-id');
-      const cart = JSON.parse(localStorage.getItem('cart') || '{}');
-      cart[id] = (cart[id] || 0) + 1;
-      localStorage.setItem('cart', JSON.stringify(cart));
-      window.location.href = 'cart.html';
-    });
-  });
-
   // Fetch products from Firebase and render
   function renderProducts() {
     const productsRef = database.ref('products');
@@ -211,6 +200,17 @@
           </div>
         `;
       }
+      // Attach event handler after rendering
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const id = this.getAttribute('data-id');
+          const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+          cart[id] = (cart[id] || 0) + 1;
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.location.href = 'cart.html';
+        });
+      });
     });
   }
   document.addEventListener('DOMContentLoaded', renderProducts);
